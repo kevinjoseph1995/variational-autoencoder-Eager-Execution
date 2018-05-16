@@ -1,6 +1,8 @@
 import tensorflow as tf
 import dataset
 import numpy as np
+import os
+import tensorflow.contrib.eager as tfe
 tf.enable_eager_execution()
 
 class variational_autoencoder(tf.keras.Model):
@@ -51,13 +53,13 @@ optimizer = tf.train.GradientDescentOptimizer(learning_rate=0.001)
 
 
 training_data=dataset.train('./datasets')
-training_data=training_data.shuffle(60000).repeat(10).batch(32)
+training_data=training_data.shuffle(60000).repeat(1).batch(32)
 
 iterator = training_data.make_one_shot_iterator()
 
 next_element,_ = iterator.get_next()
 input=tf.reshape(next_element,[next_element.shape[0],28,28,1])#(samples, rows, cols, channels)
-print(loss(model, input).shape)
+
 
 print("Initial loss: {:.3f}".format(loss(model, input)))
 
@@ -71,3 +73,7 @@ for (i, (next_element, _ )) in enumerate(training_data):
         print("Loss at step {:04d}: {:.3f}".format(i, loss(model, input)))
 
 print("Final loss: {:.3f}".format(loss(model, input)))
+
+checkpoint_dir = ‘/checkpoints/’
+checkpoint_prefix = os.path.join(checkpoint_dir, "ckpt")
+root = tfe.Checkpoint(optimizer=optimizer,model=model,optimizer_step=tf.train.get_or_create_global_step())
