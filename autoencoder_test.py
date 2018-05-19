@@ -6,9 +6,9 @@ import tensorflow.contrib.eager as tfe
 import scipy.misc
 tf.enable_eager_execution()
 
-class variational_autoencoder(tf.keras.Model):
+class autoencoder(tf.keras.Model):
     def __init__(self):
-        super(variational_autoencoder, self).__init__()
+        super(autoencoder, self).__init__()
         self.conv1=tf.keras.layers.Conv2D(filters=16,kernel_size=3,strides=2,padding='same',data_format='channels_last',dilation_rate=1,activation='relu',use_bias=True)
         self.conv2=tf.keras.layers.Conv2D(filters=32,kernel_size=3,strides=2,padding='same',data_format='channels_last',dilation_rate=1,activation='relu',use_bias=True)
         self.conv3=tf.keras.layers.Conv2D(filters=100,kernel_size=7,strides=1,padding='valid',data_format='channels_last',dilation_rate=1,activation='relu',use_bias=True)
@@ -37,7 +37,7 @@ class variational_autoencoder(tf.keras.Model):
         #print (output.shape)
         #output shape (samples, new_rows, new_cols, filters)
         return output
-model=variational_autoencoder()
+model=autoencoder()
 
 def loss(model,input):
     output=model(input)
