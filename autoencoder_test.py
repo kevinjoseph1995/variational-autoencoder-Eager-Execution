@@ -73,5 +73,5 @@ for i in range(input_images.shape[0]):
     input_image=np.squeeze(input_images[i,:,:,:])
     output_image=np.squeeze(output_images[i,:,:,:])
     print_image=np.hstack((input_image,output_image))
-    file_name='output_image/'+str(i)+'.png'
+    file_name='autoencoder_reconstructed_imgs/'+str(i)+'.png'
     scipy.misc.imsave(file_name, print_image)
