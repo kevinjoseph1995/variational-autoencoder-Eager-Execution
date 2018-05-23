@@ -4,6 +4,7 @@ import numpy as np
 import os
 import tensorflow.contrib.eager as tfe
 import scipy.misc
+import matplotlib.pyplot as plt
 tf.enable_eager_execution()
 
 class encoder(tf.keras.Model):
@@ -56,9 +57,13 @@ def generate(num_images):
     Z=tf.reshape(Z,[Z.shape[0],1,1,Z.shape[1]])
     generated_imgs=var_decoder(Z)
     return generated_imgs
-generated_images=generate(50)
+generated_images=generate(49)
 generated_images=generated_images.numpy()
+fig = plt.figure()
 for i in range(generated_images.shape[0]):
     generated_image=np.squeeze(generated_images[i,:,:,:])
+    fig.add_subplot(7, 7, i+1)
+    plt.imshow(generated_image)
     file_name='var_autoencoder_reconstructed_imgs/'+str(i)+'.png'
     scipy.misc.imsave(file_name, generated_image)
+fig.savefig('generated_images.png')
