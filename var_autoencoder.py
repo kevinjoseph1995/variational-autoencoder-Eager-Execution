@@ -43,7 +43,7 @@ var_encoder=encoder()
 var_decoder=decoder()
 
 training_data=dataset.train('./datasets')
-training_data=training_data.shuffle(60000).repeat(100).batch(64)
+training_data=training_data.shuffle(60000).repeat(20).batch(64)
 iterator = training_data.make_one_shot_iterator()
 next_element,_ = iterator.get_next()
 input=tf.reshape(next_element,[next_element.shape[0],28,28,1])#(samples, rows, cols, channels)
@@ -58,7 +58,7 @@ def loss(var_encoder,var_decoder,input):
 
     K=mu.shape[1]
     K=K.value
-    KL_divergence=tf.reduce_sum(sigma,axis=1)+tf.reduce_sum(tf.square(mu),axis=1)-K-tf.reduce_sum(tf.log(sigma+0.00000001),axis=1)
+    KL_divergence=tf.reduce_sum(sigma,axis=1)+tf.reduce_sum(tf.square(mu),axis=1)-K-tf.reduce_sum(tf.log(sigma),axis=1)
     KL_divergence=0.5*tf.reduce_mean(KL_divergence)
 
     Expectation=tf.reduce_mean(tf.reduce_sum(tf.square(tf.squeeze(input)-tf.squeeze(reconstruction)),axis=[1,2]))
@@ -71,7 +71,7 @@ def grad(var_encoder,var_decoder,input):
     loss_value = loss(var_encoder,var_decoder,input)
   return tape.gradient(loss_value, [var_encoder.variables,var_decoder.variables])
 
-optimizer = tf.train.GradientDescentOptimizer(learning_rate=0.001)
+optimizer = tf.train.AdamOptimizer()
 
 checkpoint_dir = 'var_checkpoint/'
 checkpoint_prefix = os.path.join(checkpoint_dir, "ckpt")
