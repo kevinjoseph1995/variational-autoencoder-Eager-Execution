@@ -1,5 +1,6 @@
 # Variational Autoencoder 
   - A variational autoencoder model trained on the MNIST dataset using Tensorflow's Eager Execution, an imperative programming environment that evaluates operations immediately.
+  - Eager Execution is different from the computational graph approach used within Tensorflow.  
   - https://www.tensorflow.org/programmers_guide/eager
 
 ## Training the model
