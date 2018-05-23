@@ -10,4 +10,4 @@ After completion of training, the model is stored within var_checkpoint.
 ```sh
 $ python var_generator.py
 ```
-After completion of training, the model is stored within var_checkpoint. 
+The generated images are stored in var_autoencoder_reconstructed_imgs.  
