@@ -1,2 +1,3 @@
 # Variational Autoencoder 
-- dsdsdd
+
+## Training the model
