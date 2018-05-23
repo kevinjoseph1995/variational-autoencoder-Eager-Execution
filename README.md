@@ -4,4 +4,4 @@
 ```sh
 $ python var_autoencoder.py
 ```
-After completion of training the model parameters are stored within var_checkpoint. 
+After completion of training, the model is stored within var_checkpoint. 
